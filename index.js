@@ -30,7 +30,7 @@ const monthDayLeap = {
   12: 31,
 };
 
-const daysEng = ['SUN', 'MON', 'TUE', 'WED', 'THR', 'FRI', 'SAT'];
+const daysEng = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 
 const monthEng = [
   'JAN',
