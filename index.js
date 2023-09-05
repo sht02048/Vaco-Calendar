@@ -62,6 +62,7 @@ let stdYear = monthDay; // 윤년인지 아닌지
 let firstDayOfMonth = getDay(currentMonth); // 당월의 1일;
 let today = (currentDay - 1 + getDay(currentMonth)) % 7; // 당월 1일의 요일
 let colorDay = currentDay - 1 + getDay(currentMonth);
+let dayArr = [];
 
 // HTML 연결
 
@@ -99,6 +100,7 @@ function getDay(targetMonth) {
 function reset() {
   firstDayOfMonth = firstDayOfMonth + 7;
   for (let i = 1; i <= stdYear[currentMonth]; i++) {
+    dayArr.push(firstDayOfMonth);
     thElement[firstDayOfMonth].textContent = i;
     firstDayOfMonth++;
   }
@@ -130,20 +132,33 @@ function changeDay() {
       'click',
       function showDay(evemt) {
         let index = thList.indexOf(evemt.target);
-        dayEngElement.textContent = daysEng[index % 7];
-        dayNumElement.textContent = i;
+        if (dayArr.includes(index)) {
+          dayEngElement.textContent = daysEng[index % 7];
+          dayNumElement.textContent = i;
+        }
         for (let j = 7; j <= 48; j++) {
           thElement[j].style.color = 'black';
         }
+        sunisGrey();
         thElement[index].style.color = 'red';
       }
     );
   }
 }
 
+function sunisGrey() {
+  for (let i = 7; i < 49; i++) {
+    if (i % 7 === 0) {
+      thElement[i].style.color = 'grey';
+    }
+  }
+  thElement[0].style.color = 'grey';
+}
+
 // Interaction
 
 leftElement[0].addEventListener('click', function prevMonth() {
+  dayArr = [];
   if (currentYear % 4 === 1 && currentMonth === 1) {
     currentMonth = 12;
     currentYear--;
@@ -169,11 +184,14 @@ leftElement[0].addEventListener('click', function prevMonth() {
   reset();
   changeDay();
   clearDay(colorDay);
+  sunisGrey();
   dayEngElement.textContent = daysEng[getDay(currentMonth)];
   dayNumElement.textContent = 1;
+  console.log(dayArr);
 });
 
 rightElement[0].addEventListener('click', function nextMonth() {
+  dayArr = [];
   if (stdYear === monthDayLeap && currentMonth === 12) {
     currentMonth = 1;
     currentYear++;
@@ -199,6 +217,7 @@ rightElement[0].addEventListener('click', function nextMonth() {
   reset();
   changeDay();
   clearDay(colorDay);
+  sunisGrey();
   dayEngElement.textContent = daysEng[getDay(currentMonth)];
   dayNumElement.textContent = 1;
 });
@@ -207,3 +226,4 @@ reset();
 getMonthYear();
 changeDay();
 emphasisDay(colorDay);
+sunisGrey();
