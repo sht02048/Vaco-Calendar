@@ -135,9 +135,9 @@ function changeDay() {
         if (dayArr.includes(index)) {
           dayEngElement.textContent = daysEng[index % 7];
           dayNumElement.textContent = i;
-        }
-        for (let j = 7; j <= 48; j++) {
-          thElement[j].style.color = 'black';
+          for (let j = 7; j <= 48; j++) {
+            thElement[j].style.color = 'black';
+          }
         }
         sunisGrey();
         thElement[index].style.color = 'red';
