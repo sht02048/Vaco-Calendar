@@ -126,7 +126,7 @@ function clearDay() {
 function changeDay() {
   firstDayOfMonth = getDay(currentMonth) + 7;
   for (let i = 1; i <= stdYear[currentMonth]; i++) {
-    thElement[firstDayOfMonth].addEventListener(
+    thElement[firstDayOfMonth + i - 1].addEventListener(
       'click',
       function showDay(evemt) {
         let index = thList.indexOf(evemt.target);
@@ -138,9 +138,7 @@ function changeDay() {
         thElement[index].style.color = 'red';
       }
     );
-    firstDayOfMonth++;
   }
-  currentMonth++;
 }
 
 // Interaction
@@ -150,7 +148,7 @@ leftElement[0].addEventListener('click', function prevMonth() {
     currentMonth = 12;
     currentYear--;
     if (stdDay === 0) {
-      stdDay = 4;
+      stdDay = 5;
     } else {
       stdDay = Math.abs(stdDay - 2);
     }
