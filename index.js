@@ -53,14 +53,14 @@ const date = new Date();
 
 let currentYear = Number(date.toLocaleDateString().slice(0, 4));
 let currentMonth = Number(date.toLocaleDateString().slice(5, 7));
-let currentDay = Number(date.toLocaleDateString().slice(8, 10));
+let currentDay = Number(date.toLocaleDateString().slice(8, 11));
 
 // Declare
 
-let stdDay = 0; // 당해 1월 1일의 요일
-let stdYear = monthDay; // 윤년인지 아닌지
-let firstDayOfMonth = getDay(currentMonth); // 당월의 1일;
-let today = (currentDay - 1 + getDay(currentMonth)) % 7; // 당월 1일의 요일
+let stdDay = 0;
+let stdYear = monthDay;
+let firstDayOfMonth = getDay(currentMonth);
+let today = (currentDay - 1 + getDay(currentMonth)) % 7;
 let colorDay = currentDay - 1 + getDay(currentMonth);
 let dayArr = [];
 
@@ -74,7 +74,7 @@ const rightElement = document.getElementsByClassName('right');
 const monthElement = document.querySelector('.day-Small-Month');
 const yearElement = document.querySelector('.day-Small-Year');
 const tableElement = document.querySelector('table');
-let thList = Array.from(tableElement.querySelectorAll('th'));
+const thList = Array.from(tableElement.querySelectorAll('th'));
 
 // function
 
@@ -127,6 +127,7 @@ function clearDay() {
 
 function changeDay() {
   firstDayOfMonth = getDay(currentMonth) + 7;
+
   for (let i = 1; i <= stdYear[currentMonth]; i++) {
     thElement[firstDayOfMonth + i - 1].addEventListener(
       'click',
@@ -155,6 +156,23 @@ function sunisGrey() {
   thElement[0].style.color = 'grey';
 }
 
+function openPage() {
+  reset();
+  getMonthYear();
+  changeDay();
+  emphasisDay(colorDay);
+  sunisGrey();
+}
+
+function clickDayMonth() {
+  getMonthYear();
+  clear();
+  reset();
+  changeDay();
+  clearDay(colorDay);
+  sunisGrey();
+}
+
 // Interaction
 
 leftElement[0].addEventListener('click', function prevMonth() {
@@ -179,15 +197,9 @@ leftElement[0].addEventListener('click', function prevMonth() {
     currentMonth--;
   }
   firstDayOfMonth = getDay(currentMonth);
-  clear();
-  getMonthYear();
-  reset();
-  changeDay();
-  clearDay(colorDay);
-  sunisGrey();
+  clickDayMonth();
   dayEngElement.textContent = daysEng[getDay(currentMonth)];
   dayNumElement.textContent = 1;
-  console.log(dayArr);
 });
 
 rightElement[0].addEventListener('click', function nextMonth() {
@@ -212,18 +224,9 @@ rightElement[0].addEventListener('click', function nextMonth() {
     currentMonth++;
   }
   firstDayOfMonth = getDay(currentMonth);
-  getMonthYear();
-  clear();
-  reset();
-  changeDay();
-  clearDay(colorDay);
-  sunisGrey();
+  clickDayMonth();
   dayEngElement.textContent = daysEng[getDay(currentMonth)];
   dayNumElement.textContent = 1;
 });
 
-reset();
-getMonthYear();
-changeDay();
-emphasisDay(colorDay);
-sunisGrey();
+openPage();
